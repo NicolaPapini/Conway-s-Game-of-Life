@@ -17,6 +17,6 @@ Clear the grid with the clear button.
 
 ### Random Color
 
-The cells will come alive with a random color, making it more visually interesting. 
+The cells will come alive with a random color, making it more visually interesting.  
 
 
