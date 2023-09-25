@@ -1,6 +1,5 @@
 package application;
 	
-import java.util.LinkedList;
 import java.util.Random;
 
 import javafx.application.Application;
