@@ -20,3 +20,5 @@ Clear the grid with the clear button.
 The cells will come alive with a random color, making it more visually interesting.  
 
 
+## Visual 
+![](https://github.com/NicolaPapini/Conway-s-Game-of-Life/blob/main/GifConway.gif)
