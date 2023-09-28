@@ -34,9 +34,9 @@ public class Main extends Application {
 		primaryStage.setHeight(1000);
 		primaryStage.setResizable(false);
 		primaryStage.getIcons().add(new Image("Logo.png"));
-		
+			
 		Pane rootPane = new Pane();
-        Scene scene = new Scene(rootPane, Color.BEIGE);
+        Scene scene = new Scene(rootPane);
 		GridPane gridPane = new GridPane(); //root
 		Rectangle[][] map = initializeGrid(gridPane);
 
@@ -44,36 +44,11 @@ public class Main extends Application {
 		Button stopButton = createNiceButton("Stop",220,106,662,805);
 		Button clearButton = createNiceButton("Clear",220,106,885,805);
 		
-        startButton.setOnAction(event -> {
-            generate = true;
-            isDrawing = false;
-            if (!threadActive) {
-            	threadActive = true;
-		        Thread generationThread = new Thread(() -> {
-		            while (generate) {
-		                Platform.runLater(() -> getNextGen(map)); 
-		                try {
-		                    Thread.sleep(200); 
-		                } catch (InterruptedException e) {
-		                    Thread.currentThread().interrupt();
-		                }
-		                
-		            }
-		            isDrawing = true;
-		        });
-		        generationThread.start();
-            }
-            
-        });
-		
-		stopButton.setOnAction(event-> {
-			generate=false;
-			threadActive=false;
-		});
-		
+        startButton.setOnAction(event -> startSimulation(map));
+		stopButton.setOnAction(event-> stopSimulation());
 		clearButton.setOnAction(event->clearBoard(map));	
+		
         rootPane.getChildren().addAll(gridPane, startButton,stopButton,clearButton);
-        
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Conway's Game of Life DEMO");
 		primaryStage.show();
@@ -159,8 +134,33 @@ public class Main extends Application {
 		return ( (map[x][y].getFill()!=Color.WHITE && (aliveNeighbors<2 || aliveNeighbors>3)) || 
 				((map[x][y].getFill()==Color.WHITE) && (aliveNeighbors!=3)))? false: true;
 	}
-	
-	private static void clearBoard(Rectangle[][] map) {
+    
+   	private void startSimulation(Rectangle[][] map) {
+	        generate = true;
+	        isDrawing = false;
+	        if (!threadActive) {
+	            threadActive = true;
+	            Thread generationThread = new Thread(() -> {
+	                while (generate) {
+	                    Platform.runLater(() -> getNextGen(map));
+	                    try {
+	                        Thread.sleep(200);
+	                    } catch (InterruptedException e) {
+	                        Thread.currentThread().interrupt();
+	                    }
+	                }
+	                isDrawing = true;
+	            });
+	            generationThread.start();
+	        }
+	    }
+    
+	private void stopSimulation() {
+		generate = false;
+		threadActive = false;
+    	}
+	    
+	private void clearBoard(Rectangle[][] map) {
 		for (int i = 0; i < NUM_ROWS; i++) {
 			for (int j = 0; j < NUM_COLUMNS; j++) {
 				map[i][j].setFill(Color.WHITE);;					
@@ -176,9 +176,8 @@ public class Main extends Application {
 		}
 	}
 	
-	
-    private static Color getRandomColor() {
-        Random random = new Random();
+	private static Color getRandomColor() {
+		Random random = new Random();
 		return colors[random.nextInt(colors.length)];  
-    }	
+    	}
 }
