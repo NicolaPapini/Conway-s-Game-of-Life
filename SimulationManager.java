@@ -45,6 +45,8 @@ public class SimulationManager {
                 map[i][j].setFill(Color.WHITE);
             }
         }
+	isColourable = true;
+        generate = false;
     }
     
     public boolean isColourable() {
