@@ -15,10 +15,5 @@ Control the simulation with the start/stop buttons.
 
 Clear the grid with the clear button.
 
-### Random Color
-
-The cells will come alive with a random color, making it more visually interesting.  
-
-
 ## Visual 
 ![](https://github.com/NicolaPapini/Conway-s-Game-of-Life/blob/main/GifConway.gif)
